@@ -1,13 +1,11 @@
 #include <LiquidCrystal.h> // Adiciona a biblioteca "LiquidCrystal" ao projeto
 
-LiquidCrystal lcd(12, 11, 5, 4, 3, 2); // Pinagem do LCD
+LiquidCrystal lcd(12, 11, 7, 6, 5, 4); // Pinagem do LCD
 String prints[3] = {"Vermelho","Amarelo","Azul"};
 int leds[3] = {13,12,11};
 void setup()
 {
   lcd.begin(16, 2); // Inicia o lcd de 16x2
-  lcd.init();
-  lcd.backlight();
   lcd.setCursor(0,0);
   lcd.print("Ola, Mundo!");
   lcd.setCursor(0,1);
