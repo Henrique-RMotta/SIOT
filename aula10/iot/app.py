@@ -23,7 +23,8 @@ def control (led_num,action):
             command = 'A' if action == 'on' else 'a'
         elif led_num == '2':
             command ='B' if action == 'on' else 'b'
-        
+        elif led_num == '2':
+            command = 'C' if action == 'on' else 'c'
         if command:
             arduino.write(command.encode())
             return f"Comando '{command}' enviado para o LED {led_num}"

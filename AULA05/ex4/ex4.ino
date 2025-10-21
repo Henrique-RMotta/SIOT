@@ -1,40 +1,32 @@
-int led1 = 11;  
-int led2 = 12;  
-int led3 = 13;
-int led4 = 6;
-int botao = 2;  
+const int led1Pin = 8;
+const int led2Pin = 9;
 
 void setup() {
-  pinMode(led1, OUTPUT);
-  pinMode(led2, OUTPUT);
-  pinMode(led3, OUTPUT);
-  pinMode(led4, OUTPUT);
-  pinMode(botao, INPUT);
+  Serial.begin(9600);
+
+  pinMode(led1Pin, OUTPUT);
+  pinMode(led2Pin, OUTPUT);
 }
 
 void loop() {
-  if (digitalRead(botao) == LOW) {
-    digitalWrite(led1, HIGH);
-    delay(3000);
-    digitalWrite(led1, LOW);
+  if (Serial.available() > 0) {
+    char command = Serial.read();
 
-    digitalWrite(led2, HIGH);
-    delay(3000);
-    digitalWrite(led2, LOW);
+    switch(command) {
+      case 'A':
+        digitalWrite(led1Pin,HIGH);
+        break;
+      
+      case 'a':
+        digitalWrite(led1Pin, LOW);
+        break;
+      case 'B':
+        digitalWrite(led2Pin, HIGH);
 
-    digitalWrite(led3, HIGH);
-    delay(3000);
-    digitalWrite(led3, LOW);
-  } else { 
-    digitalWrite(led4, HIGH);
-    delay(2000);
-    digitalWrite(led2, LOW);
-    digitalWrite(led1, LOW);
-    delay(1000);
-    digitalWrite(led3, HIGH);
-    delay(6000);
-    digitalWrite(led3, LOW);
-    digitalWrite(led4, LOW);
+      case 'b':
+        digitalWrite(led2Pin, LOW);
+        break;
+    }
 
   }
 }

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Led</title>
-    <link rel="stylesheet" href="style.css" />  
+    <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}" />  
 </head>
 <body>
     <header>
@@ -18,9 +18,14 @@
                 <button class="desligar" onclick="controled('1','off')">Desligar</button>
             </div>
             <div class="card2">
-                <h2>LED 2 (Vermelho)</h2>
+                <h2>LED 2 (Amarelo)</h2>
                 <button class="ligar" onclick="controled('2','on')">Ligar</button>
                 <button class="desligar" onclick="controled('2','off')">Desligar</button>
+            </div>
+            <div class="card2">
+                <h2>LED 3 (Vermelho)</h2>
+                <button class="ligar" onclick="controled('3','on')">Ligar</button>
+                <button class="desligar" onclick="controled('3','off')">Desligar</button>
             </div>
         </div>
     </main>
