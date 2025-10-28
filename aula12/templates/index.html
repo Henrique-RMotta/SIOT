@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Led</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}" />  
+</head>
+<body>
+    <header>
+        <h1>Controle de um Estufa</h1>
+    </header>
+    <main>
+        <div class="caixaSensor">
+             <h2>Sensores Estufa</h2>
+            <p>Temperatura: <span id="temp">--</span> &deg;C</p>
+            <p>Umidade: <span id="umid">--</span> %</p>
+            <p>Luminosidade: <span id="lum">--</span> %</p>
+        </div>
+        <div class="caixa">
+            <img id="imagem-planta" src="{{url_for('static', filename='images/irrigacaoSemAgua.png')}}" alt="pranta" srcset="">
+        <div class="valvula">
+            <button class="ligar"  onclick="controled('3','on')">Ligar</button>
+            <button class="desligar" onclick="controled('3','off')">Desligar</button>
+        </div>
+        </div>
+      
+    </main>
+</body>
+<script>
+        function controled(ledNum,action) {
+            fetch(`/control/${ledNum}/${action}`)
+            .then(response => response.txt)
+            .then(data => {
+                console.log(data)
+            })
+            .catch(error => {
+                console.error("Error:", error)
+            })
+            switch(action){
+                case 'on':
+                    mudarImagem('ligar')
+                    break;
+                case 'off':
+                    mudarImagem('Desligar')
+                    break
+
+            }
+            
+        }
+
+        function mudarImagem(tipo) {
+            let imagem = document.getElementById("imagem-planta");
+            switch (tipo) {
+                case 'ligar':
+                    imagem.src = "{{url_for('static', filename='images/irrigacao.png')}}"
+                    break
+                case 'Desligar':
+                     imagem.src = "{{url_for('static', filename='images/irrigacaoSemAgua.png')}}"
+                    break
+            }
+        }
+</script>
+</html>
