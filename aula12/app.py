@@ -16,15 +16,11 @@ def index():
     return render_template('index.html')
 
 @app.route('/control/<led_num>/<action>')
-def control (led_num,action):
+def control (motor,action):
     if arduino:
         command = ''
-        if led_num == '1':
+        if motor == '1':
             command = 'A' if action == 'on' else 'a'
-        elif led_num == '2':
-            command ='B' if action == 'on' else 'b'
-        elif led_num == '2':
-            command = 'C' if action == 'on' else 'c'
         if command:
             arduino.write(command.encode())
             return f"Comando '{command}' enviado para o LED {led_num}"
@@ -33,5 +29,27 @@ def control (led_num,action):
     else:
         return "Arduino não conectado"
     
+app.route('/get_data/')
+def buscarDadosSensor():
+    if not arduino:
+        return jsonify({"erro": "Arduino não conectado"})
+
+    command = 'T'
+    arduino.write(command.encode())
+    if arduino.in_waiting > 0:
+        time.sleep(1)
+        linha = arduino.readline().decode('utf-8', errors='replace').strip()
+        values = linha.split(";")
+
+        if len(values) >= 3:
+            return jsonify({
+                "temp": values[0],
+                "umid": values[1],
+                "lum" : values[2]
+            })
+        else:
+            return jsonify({"erro": f"Dado inválido: {linha}"})
+    else:
+        return jsonify({"erro": "Nenhum dado disponível"})
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000, use_reloader = False)

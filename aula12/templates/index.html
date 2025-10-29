@@ -8,11 +8,11 @@
 </head>
 <body>
     <header>
-        <h1>Controle de um Estufa</h1>
+        <h1>Controle de uma Estufa</h1>
     </header>
     <main>
         <div class="caixaSensor">
-             <h2>Sensores Estufa</h2>
+            <h2>Sensores Estufa</h2>
             <p>Temperatura: <span id="temp">--</span> &deg;C</p>
             <p>Umidade: <span id="umid">--</span> %</p>
             <p>Luminosidade: <span id="lum">--</span> %</p>
@@ -20,17 +20,18 @@
         <div class="caixa">
             <img id="imagem-planta" src="{{url_for('static', filename='images/irrigacaoSemAgua.png')}}" alt="pranta" srcset="">
         <div class="valvula">
-            <button class="ligar"  onclick="controled('3','on')">Ligar</button>
-            <button class="desligar" onclick="controled('3','off')">Desligar</button>
+            <button class="ligar"  onclick="controled('1','on')">Ligar</button>
+            <button class="desligar" onclick="controled('1','off')">Desligar</button>
         </div>
+        <p id="valvula">  Válvula ↑</p>
         </div>
       
     </main>
 </body>
 <script>
-        function controled(ledNum,action) {
-            fetch(`/control/${ledNum}/${action}`)
-            .then(response => response.txt)
+        function controled(motor,action) {
+            fetch(`/control/${motor}/${action}`)
+            .then(response => response.text())
             .then(data => {
                 console.log(data)
             })
@@ -60,5 +61,30 @@
                     break
             }
         }
+
+        function buscarDadosSensor() {
+            fetch('/get_data/') // Chama a nova rota no app.py
+                .then(response => response.json()) // Converte a resposta para JSON
+                .then(data => {
+                    // Atualiza os valores na página
+                    if (data.error) {
+                        document.getElementById('temp').innerText = "Erro";
+                        document.getElementById('umid').innerText = "Erro";
+                        document.getElementById('lum').innerText = "Erro";
+                    } else {
+                        document.getElementById('temp').innerText = data.temp;
+                        document.getElementById('umid').innerText = data.umid;
+                        document.getElementById('umid').innerText = data.lum;
+                    }
+                })
+                
+                .catch(error => console.error('Erro ao buscar dados:', error));
+            }
+
+        // Chama a função para buscar os dados a cada 3 segundos
+        setInterval(buscarDadosSensor, 3000);
+
+        // Busca os dados assim que a página carregar
+        document.addEventListener('DOMContentLoaded', buscarDadosSensor);
 </script>
 </html>

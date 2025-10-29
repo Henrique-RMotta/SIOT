@@ -3,6 +3,7 @@ main {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .caixa {
@@ -13,6 +14,12 @@ main {
     border-width: 1px;
     position: relative;
 
+}
+
+#valvula {
+    position: absolute;
+    top: 10%;
+    right: 0;
 }
 header {
     display: flex;
@@ -40,9 +47,43 @@ img {
 }
 
 .caixaSensor{
-    height: 350px;
+
     width: 400px;
-    border-radius: 20px;
+    border-radius: 1px;
+    border-style: solid;
+    border-width: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 5px;
+    height: auto;
+    
+}
+.caixaSensor h2 {
+    border-bottom: 2px solid black;
+    width: 100%;
+    text-align: center;
+    background-color: aqua;
+    margin: 0;
+}   
+
+.caixaSensor p {
+    border: 0;
+}
+.ligar {
+    border-radius: 3px;
     border-style: solid;
     border-width: 1px;
+    background-color: green;
+    color: white;
 }
+
+.desligar {
+    border-radius: 3px;
+    border-style: solid;
+    border-width: 1px;
+    background-color: red;
+    color: white;
+}
+
