@@ -16,8 +16,9 @@ DHT dht(DHTPIN, DHTTYPE);
 const int rs = 12, en = 11, d4 = 5, d5 = 4, d6 = 3, d7 = 2;
 LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 
+// Definindo os pinos do ldr e o pino da lâmpada a ser controlada pelo ldr
 int pinoLDR = A0; 
-
+int LAMP = 9;
 void setup() {
   // definindo o pino do servo
   servo.attach(10);
@@ -73,6 +74,10 @@ void loop() {
         break;
     } 
   }
+
+  // Variando a intensidade da luz da lâmpada de acordo com a luminosidade
+  int valorLamp = map(LDR, 0 ,100, 255 ,0 );
+  analogWrite(LAMP, valorLamp);
 }
 // função para mapear o valor do LDR
 int sensorLum (){
@@ -83,6 +88,7 @@ int sensorLum (){
 
 void escreverDisplay (float t, float h, int lum) {
   lcd.clear();
+
   //Temperatura
   lcd.setCursor(0,0);
   lcd.print("Temp:");
