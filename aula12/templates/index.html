@@ -29,8 +29,8 @@
     </main>
 </body>
 <script>
-        function controled(motor,action) {
-            fetch(`/control/${motor}/${action}`)
+        function controled(led_num,action) {
+            fetch(`/control/${led_num}/${action}`)
             .then(response => response.text())
             .then(data => {
                 console.log(data)
@@ -38,26 +38,19 @@
             .catch(error => {
                 console.error("Error:", error)
             })
-            switch(action){
-                case 'on':
-                    mudarImagem('ligar')
-                    break;
-                case 'off':
-                    mudarImagem('Desligar')
-                    break
 
-            }
-            
+            // chama mudança de imagem usando a mesma ação ('on' / 'off')
+            mudarImagem(action)
         }
 
-        function mudarImagem(tipo) {
+        function mudarImagem(action) {
             let imagem = document.getElementById("imagem-planta");
-            switch (tipo) {
-                case 'ligar':
-                    imagem.src = "{{url_for('static', filename='images/irrigacao.png')}}"
+            switch (action) {
+                case 'on':
+                    imagem.src = "{{ url_for('static', filename='images/irrigacao.png') }}"
                     break
-                case 'Desligar':
-                     imagem.src = "{{url_for('static', filename='images/irrigacaoSemAgua.png')}}"
+                case 'off':
+                     imagem.src = "{{ url_for('static', filename='images/irrigacaoSemAgua.png') }}"
                     break
             }
         }
@@ -74,7 +67,7 @@
                     } else {
                         document.getElementById('temp').innerText = data.temp;
                         document.getElementById('umid').innerText = data.umid;
-                        document.getElementById('umid').innerText = data.lum;
+                        document.getElementById('lum').innerText = data.lum;
                     }
                 })
                 

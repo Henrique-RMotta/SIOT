@@ -74,7 +74,7 @@ void loop() {
           Serial.println(LDR);
         }
         if (h < 45) {
-          abrirValvula();
+          // abrirValvula();
         }
         break;
     } 
@@ -98,9 +98,9 @@ void escreverDisplay (float t, float h, int lum) {
   //Temperatura
   lcd.setCursor(0,0);
   lcd.print("Temp:");
-  lcd.setCursor(6,0);
+  lcd.setCursor(5,0);
   lcd.print(t);
-  lcd.setCursor(11,0);
+  lcd.setCursor(10,0);
   lcd.print("C");
 
    // Luminosidade
@@ -120,7 +120,7 @@ void escreverDisplay (float t, float h, int lum) {
 void abrirValvula() {
   lcd.clear();
   lcd.setCursor(0,0);
-  lcd.print("O sistema está irrigando as plantas...");
+  lcd.print("Irrigando");
   servo.write(90);
   delay(10000);
   servo.write(0);

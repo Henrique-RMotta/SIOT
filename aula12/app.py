@@ -3,7 +3,7 @@ import serial
 import time 
 
 try:
-    arduino = serial.Serial('COM3',9600,timeout=1)
+    arduino = serial.Serial('COM4',9600,timeout=1)
     time.sleep(2)
 except serial.SerialException as e:  
     print(f"Erro ao conectar com o Arduino {e}")
@@ -29,10 +29,10 @@ def control (led_num,action):
     else:
         return "Arduino não conectado"
     
-app.route('/get_data/')
+@app.route('/get_data/')
 def buscarDadosSensor():
     if not arduino:
-        return jsonify({"erro": "Arduino não conectado"})
+        return jsonify({"error": "Arduino não conectado"})
 
     command = 'T'
     arduino.write(command.encode())
@@ -48,8 +48,9 @@ def buscarDadosSensor():
                 "lum" : values[2]
             })
         else:
-            return jsonify({"erro": f"Dado inválido: {linha}"})
+            return jsonify({"error": f"Dado inválido: {linha}"})
     else:
-        return jsonify({"erro": "Nenhum dado disponível"})
+        return jsonify({"error": "Nenhum dado disponível"})
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000, use_reloader = False)
