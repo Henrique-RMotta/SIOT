@@ -16,10 +16,10 @@ def index():
     return render_template('index.html')
 
 @app.route('/control/<led_num>/<action>')
-def control (motor,action):
+def control (led_num,action):
     if arduino:
         command = ''
-        if motor == '1':
+        if led_num == '1':
             command = 'A' if action == 'on' else 'a'
         if command:
             arduino.write(command.encode())

@@ -19,6 +19,8 @@ LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 // Definindo os pinos do ldr e o pino da lâmpada a ser controlada pelo ldr
 int pinoLDR = A0; 
 int LAMP = 9;
+
+
 void setup() {
   // definindo o pino do servo
   servo.attach(10);
@@ -71,13 +73,17 @@ void loop() {
           Serial.print(";");
           Serial.println(LDR);
         }
+        if (h < 45) {
+          abrirValvula();
+        }
         break;
     } 
-  }
-
   // Variando a intensidade da luz da lâmpada de acordo com a luminosidade
   int valorLamp = map(LDR, 0 ,100, 255 ,0 );
   analogWrite(LAMP, valorLamp);
+
+  
+  }
 }
 // função para mapear o valor do LDR
 int sensorLum (){
@@ -109,4 +115,14 @@ void escreverDisplay (float t, float h, int lum) {
   lcd.setCursor(9,1);
   lcd.print(h, 0); // sem casa decimal
   lcd.print("%");
+}
+
+void abrirValvula() {
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print("O sistema está irrigando as plantas...");
+  servo.write(90);
+  delay(10000);
+  servo.write(0);
+  lcd.clear();
 }
